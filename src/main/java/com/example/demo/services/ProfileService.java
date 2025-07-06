@@ -39,4 +39,10 @@ public class ProfileService {
         profileRepository.deleteById(id);
     }
 
+    public Profile getProfileByUserId(Long userId) {
+        return profileRepository.findByUserId(userId)
+                .orElseThrow(() -> new RuntimeException("Profile not found for user id: " + userId));
+    }
+
+
 }

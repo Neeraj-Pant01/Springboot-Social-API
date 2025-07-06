@@ -39,4 +39,11 @@ public class ProfileController {
         profileService.deleteProfile(id);
     }
 
+
+    @GetMapping("/user/{userId}")
+    public Profile getProfileByUserId(@PathVariable Long userId) {
+        return profileService.getProfileByUserId(userId);
+    }
+
+
 }
