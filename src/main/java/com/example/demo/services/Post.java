@@ -19,15 +19,15 @@ public class Post {
     @Autowired
     private UserRepository userrepository;
 
-    public List <post> listPosts (){
+    public List<post> listPosts() {
         return postrepository.findAll();
     }
 
-    public List <post> ListUserPosts(Long userId){
+    public List<post> ListUserPosts(Long userId) {
         return postrepository.findByUserId(userId);
     }
 
-    public post createPost(Long userId, post postData){
+    public post createPost(Long userId, post postData) {
         User user = userrepository.findById(userId).orElseThrow(() -> new RuntimeException("user not found"));
         postData.setUser(user);
         return postrepository.save(postData);
@@ -37,16 +37,37 @@ public class Post {
         return postrepository.findById(postId).orElse(null);
     }
 
-    public post updatePost(Long postId, post updatedPostdata){
-        post currentPost = postrepository.findById(postId).orElseThrow(()->new RuntimeException("post not found"));
+    public post updatePost(Long postId, post updatedPostdata) {
+        post currentPost = postrepository.findById(postId).orElseThrow(() -> new RuntimeException("post not found"));
         currentPost.setTitle(updatedPostdata.getTitle());
         currentPost.setDescription(updatedPostdata.getDescription());
         currentPost.setImageUrl(updatedPostdata.getImageUrl());
         return postrepository.save(currentPost);
     }
 
-    public void deletePost(Long postId){
+    public void deletePost(Long postId) {
         postrepository.deleteById(postId);
     }
 
+    public post likePost(Long postId) {
+        post currentPost = postrepository.findById(postId).orElseThrow(() -> new RuntimeException("post not found !"));
+        currentPost.setLikes(currentPost.getLikes() + 1);
+        return postrepository.save(currentPost);
+    }
+
+    public post DislikePost(Long postId) {
+        post currentPost = postrepository.findById(postId).orElseThrow(() -> new RuntimeException("Post not found !"));
+        currentPost.setDisLikes(currentPost.getDislikes() + 1);
+        currentPost.setLikes((currentPost.getLikes() >= 0) ? currentPost.getLikes() - 1 : 0);
+        return postrepository.save(currentPost);
+
+    }
+
+    public post sharePost(Long postId){
+        post currentPost = postrepository.findById(postId).orElseThrow(()-> new RuntimeException("Post not found !"));
+        currentPost.setShares(currentPost.getShares() + 1);
+        return postrepository.save(currentPost);
+    }
 }
+
+

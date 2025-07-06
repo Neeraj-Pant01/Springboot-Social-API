@@ -29,9 +29,24 @@ public class PostController {
         return postService.createPost(userId,postData);
     }
 
-    @PutMapping("/{postId}")
+    @PatchMapping("/{postId}")
     public post UpdatePost(@PathVariable Long postId, post updatedData){
         return postService.updatePost(postId,updatedData);
+    }
+
+    @PutMapping("/{postId}/like")
+    public post likePost(@PathVariable Long postId){
+        return postService.likePost(postId);
+    }
+
+    @PutMapping("/{postId}/dislike")
+    public post DislikePost(@PathVariable Long postId){
+        return postService.DislikePost(postId);
+    }
+
+    @PutMapping("/{postId}/share")
+    public post SharePost(@PathVariable Long postId){
+        return postService.sharePost(postId);
     }
 
     @DeleteMapping("/{postId}")
