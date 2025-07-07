@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
@@ -16,6 +17,11 @@ public class User {
 
     private String name;
     private String email;
+
+    @JsonIgnore
+    private String password;
+
+    private String role = "USER";
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Profile profile;
